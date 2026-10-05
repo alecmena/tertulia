@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Tertulia — an invitation-only monthly salon for unhurried conversation in Washington, D.C.">
+<style>*,*::before,*::after{box-sizing:border-box}html,body{margin:0}html{background:#17120D}img{max-width:100%}</style>
+<title>Tertulia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap">
+<style>
+  /* Layout: a centered frontispiece — a monogram seal, the wordmark, a
+     dictionary gloss, three spare movements, and the invitation line, on a
+     candlelit ink ground. One committed nighttime world; same in light and
+     dark OS themes. */
+  :root{
+    --ink:      #17120D;   /* warm near-black ground (brown bias, not neutral) */
+    --ink-glow: #241B12;   /* candlelight warmth behind the crest */
+    --ivory:    #F1E8D6;   /* warm ivory — primary text */
+    --parch:    #C9B99B;   /* muted parchment — secondary text */
+    --gold:     #CFA254;   /* candlelit gold — accent, labels, links */
+    --gold-dim: #8C7647;   /* dim gold — hairline ornament, rings */
+    --rule:     #3A2E20;   /* hairline rule on dark */
+    color-scheme: dark;
+  }
+
+  body{
+    background:var(--ink);
+    color:var(--ivory);
+    font-family:'EB Garamond', Georgia, 'Times New Roman', serif;
+    font-size:1.0625rem;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+    position:relative;
+    overflow-x:hidden;
+  }
+
+  /* Candlelight — a single warm radial, kept very low so it never reads as a
+     gradient hero. */
+  body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    background:radial-gradient(60% 42% at 50% 15%, var(--ink-glow) 0%, rgba(36,27,18,0) 70%);
+    pointer-events:none;
+    z-index:0;
+  }
+
+  .sheet{
+    position:relative;
+    z-index:1;
+    max-width:48rem;
+    margin-inline:auto;
+    padding-inline:24px;
+    padding-block:clamp(3.5rem, 9vh, 6.5rem) clamp(3rem, 7vh, 5rem);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    text-align:center;
+    gap:2.25rem;
+  }
+
+  /* One-time entrance; never a scroll-triggered reveal, and disabled for
+     reduced-motion so the content is simply present at rest. */
+  @media (prefers-reduced-motion:no-preference){
+    .fade{ animation:rise 1s cubic-bezier(.2,.6,.2,1) both; }
+    .fade.d1{ animation-delay:.12s; }
+    .fade.d2{ animation-delay:.24s; }
+    @keyframes rise{ from{ opacity:0; transform:translateY(10px); } to{ opacity:1; transform:none; } }
+  }
+
+  /* Monogram seal — a gold signet, double hairline ring. */
+  .seal{
+    position:relative;
+    width:clamp(92px, 20vw, 108px);
+    aspect-ratio:1;
+    border:1.5px solid var(--gold);
+    border-radius:50%;
+    display:grid;
+    place-items:center;
+    box-shadow:0 6px 24px rgba(0,0,0,.4);
+  }
+  .seal::before{
+    content:"";
+    position:absolute;
+    inset:6px;
+    border:0.75px solid var(--gold-dim);
+    border-radius:50%;
+  }
+  .seal-letter{
+    font-family:'Cormorant Garamond', Georgia, serif;
+    font-weight:500;
+    font-size:clamp(3rem, 7vw, 3.55rem);
+    line-height:1;
+    color:var(--ivory);
+    padding-left:.03em; /* optical centering of the serif T */
+    transform:translateY(-.02em);
+  }
+
+  .eyebrow{
+    font-family:'EB Garamond', Georgia, serif;
+    text-transform:uppercase;
+    letter-spacing:.42em;
+    font-size:.72rem;
+    color:var(--gold);
+    margin-bottom:-.9rem;
+    padding-left:.42em; /* optical: balance the trailing track */
+  }
+
+  .wordmark{
+    font-family:'Cormorant Garamond', Georgia, serif;
+    font-weight:500;
+    font-size:clamp(3.1rem, 12vw, 6.25rem);
+    line-height:.92;
+    letter-spacing:.2em;
+    padding-left:.2em; /* optical centering against trailing letter-spacing */
+    margin:0;
+    color:var(--ivory);
+    text-wrap:balance;
+  }
+
+  /* Hairline rule with a centered lozenge — an engraving convention. */
+  .rule{ display:flex; align-items:center; justify-content:center; gap:1.1rem; width:min(20rem, 70%); color:var(--gold-dim); }
+  .rule::before, .rule::after{ content:""; height:1px; flex:1; background:linear-gradient(to right, transparent, var(--rule) 20%, var(--rule) 80%, transparent); }
+  .rule span{ font-size:.6rem; line-height:1; transform:translateY(-1px); }
+
+  .gloss{
+    max-width:34rem;
+    font-size:1.2rem;
+    line-height:1.7;
+    color:var(--parch);
+  }
+  .gloss .word{ font-family:'Cormorant Garamond', Georgia, serif; font-weight:600; font-size:1.28em; color:var(--gold); letter-spacing:.01em; }
+  .gloss i{ color:var(--ivory); }
+
+  .lead{
+    max-width:33rem;
+    font-size:1.235rem;
+    line-height:1.78;
+    color:var(--ivory);
+  }
+  .lead .close{ display:block; margin-top:1.05rem; font-style:italic; color:var(--parch); }
+
+  .movement-title{
+    font-family:'Cormorant Garamond', Georgia, serif;
+    font-weight:500;
+    font-size:clamp(1.55rem, 4.4vw, 2.05rem);
+    letter-spacing:.06em;
+    margin:0;
+    color:var(--ivory);
+  }
+
+  /* The particulars, set like an engraved program. */
+  .particulars{
+    display:grid;
+    grid-template-columns:auto 1fr;
+    gap:.85rem 1.75rem;
+    max-width:27rem;
+    width:100%;
+    margin:0 auto;
+    text-align:left;
+  }
+  .particulars dt{
+    text-transform:uppercase;
+    letter-spacing:.24em;
+    font-size:.68rem;
+    color:var(--gold);
+    text-align:right;
+    align-self:baseline;
+    padding-top:.55rem;
+  }
+  .particulars dd{
+    margin:0;
+    font-family:'Cormorant Garamond', Georgia, serif;
+    font-weight:500;
+    font-size:1.5rem;
+    line-height:1.2;
+    color:var(--ivory);
+  }
+
+  .invite{ max-width:33rem; font-size:1.18rem; line-height:1.72; color:var(--ivory); }
+  .contact{
+    margin-top:1.4rem;
+    font-family:'Cormorant Garamond', Georgia, serif;
+    font-size:1.5rem;
+    letter-spacing:.02em;
+  }
+  .contact a{ color:var(--gold); text-decoration:none; border-bottom:1px solid var(--gold-dim); padding-bottom:.08em; transition:border-color .2s ease, color .2s ease; }
+  .contact a:hover, .contact a:focus-visible{ color:var(--ivory); border-color:var(--gold); }
+  .contact a:focus-visible{ outline:2px solid var(--gold); outline-offset:4px; border-radius:2px; }
+  .reply{ margin-top:1rem; font-style:italic; color:var(--parch); font-size:1.05rem; }
+
+  footer{
+    text-transform:uppercase;
+    letter-spacing:.34em;
+    font-size:.66rem;
+    color:var(--parch);
+    padding-left:.34em;
+  }
+
+  .movement{ display:flex; flex-direction:column; align-items:center; gap:1.4rem; width:100%; }
+
+  @media (max-width:420px){
+    .particulars{ grid-template-columns:1fr; gap:.25rem; max-width:17rem; text-align:center; }
+    .particulars dt{ text-align:center; padding-top:.9rem; }
+    .particulars dd{ font-size:1.4rem; }
+  }
+</style>
+</head>
+<body>
+
+
+<div class="sheet">
+
+  <!-- ── Crest: monogram seal ── -->
+  <div class="seal fade" role="img" aria-label="Tertulia monogram">
+    <span class="seal-letter">T</span>
+  </div>
+
+  <!-- ── Masthead ── -->
+  <div class="movement fade d1" style="gap:1.1rem">
+    <p class="eyebrow">Washington, D.C.</p>
+    <h1 class="wordmark">TERTULIA</h1>
+    <div class="rule"><span>&#9670;</span></div>
+    <p class="gloss"><span class="word">ter&middot;tu&middot;lia</span>, <i>n.</i> &mdash; a regular gathering of friends and strangers to talk, unhurried, of the arts, of ideas, and of the affairs of the day.</p>
+  </div>
+
+  <!-- ── The idea ── -->
+  <p class="lead fade d2">
+    Tertulia is a monthly salon in Washington. Each evening draws a small company around a single question, chosen beforehand and sent ahead. We meet to think out loud, to disagree well, and to leave having listened as much as spoken.
+    <span class="close">Conversation is the whole of the entertainment.</span>
+  </p>
+
+  <div class="rule"><span>&#9670;</span></div>
+
+  <!-- ── The evening ── -->
+  <section class="movement">
+    <h2 class="movement-title">The Evening</h2>
+    <dl class="particulars">
+      <dt>Cadence</dt><dd>Monthly</dd>
+      <dt>Company</dt><dd>Ten to twenty-nine</dd>
+      <dt>The Question</dt><dd>One, known in advance</dd>
+      <dt>The Record</dt><dd>Nothing on it</dd>
+      <dt>Dress</dt><dd>Elevated</dd>
+      <dt>Admission</dt><dd>By invitation</dd>
+    </dl>
+  </section>
+
+  <div class="rule"><span>&#9670;</span></div>
+
+  <!-- ── The invitation ── -->
+  <section class="movement">
+    <h2 class="movement-title">An Invitation</h2>
+    <p class="invite">
+      Membership comes by introduction. If a member has suggested you write, or if Tertulia reached you by some other good turn, send a note and tell us a little of what you have been thinking about lately.
+    </p>
+    <p class="contact"><a href="mailto:tertulia.dc@gmail.com">tertulia.dc@gmail.com</a></p>
+    <p class="reply">Every letter is answered.</p>
+  </section>
+
+  <div class="rule" style="margin-top:1rem"><span>&#9670;</span></div>
+
+  <footer>Tertulia &middot; Washington, D.C. &middot; Est. MMXXVI</footer>
+
+</div>
+
+</body>
+</html>
